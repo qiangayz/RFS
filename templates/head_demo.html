@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>主页</title>
+    <link rel="stylesheet" href="/static/plugins/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/static/plugins/font-awesome/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="/static/plugins/jquery-ui/jquery-ui.min.css"/>
+    <link rel="stylesheet" href="/static/css/theme.css"/>
+    <script type="text/javascript" src="/static/plugins/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/static/plugins/jquery-ui/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="/static/plugins/jquery-cookie/jquery.cookie.js"></script>
+    <style>
+        .blogtheme {
+            font-size: 35px;
+            font-weight: bolder;
+            font-family: 楷体;
+        }
+        .onepho{
+            width: 80px;
+            height: 80px;
+            margin-right: 8px;
+        }
+        .left{
+            float: left;
+        }
+        .right{
+            float: right;
+        }
+        .userinfo{
+            margin-top: 5px;
+            margin-bottom: 0;
+
+        }
+        .userinfo .info{
+            font-size: 18px;
+        }
+        .userinfo .info1{
+            font-size: 18px;
+            color: #3baae3;
+        }
+        a{
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand blogtheme" href="#">多模知识库</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+            {% if not Article_type_id %}
+                <li class="active"><a href="/">全部</a></li>
+            {% else %}
+                <li><a href="/">全部</a></li>
+            {% endif %}
+                {% for row in type_choice %}
+                    {% if row.0 == Article_type_id %}
+{#                        <li class="active"><a href="/sel-{{ row.0 }}.html">{{ row.1 }}</a></li>#}
+                         <li class="active" ><a href={% url 'index' article_type_id=row.0 %}>{{ row.1 }}</a></li>
+                    {% else %}
+{#                        <li ><a href="/sel-{{ row.0 }}.html">{{ row.1 }}</a></li>#}
+                        <li ><a href={% url 'index' article_type_id=row.0 %}>{{ row.1 }}</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                {% if request.session.userinfo %}
+                    <li><a href="#">{{ request.session.userinfo }}</a></li>
+                    {% if request.session.blogname %}
+                     <li><a href="/{{ request.session.blogname }}.html">我的博客</a></li>
+                        {% else %}
+                        <li><a href="/openblog-{{ request.session.userinfo}}/">开通博客</a></li>
+                        {% endif %}
+                    <li><a href="/logout.html">退出登录</a></li>
+                {% else %}
+                <li><a href="/login.html">登录</a></li>
+                <li><a href="/register.html">注册</a></li>
+                {% endif %}
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</nav>
+
+{% block content %} {% endblock %}
+</body>
+</html>

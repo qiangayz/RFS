@@ -1,0 +1,66 @@
+{% extends 'backdemo.html' %}
+{% block title %}
+    add-article
+{% endblock %}
+{% block css %}
+    <style>
+    .c1{
+        margin-left: 5px;
+    }
+    .c2{
+        font-size: 15px;
+    }
+    .summary{
+    height: 100px !important;}
+    form span{
+        color: red;
+    }
+    </style>
+{% endblock %}
+{% block content %}
+    <ol class="breadcrumb">
+        <li><a href="#">文章管理</a></li>
+        <li class="active">添加文章</li>
+    </ol>
+    <div class="c1">
+<form method="POST" action="/backend/add-article.html" novalidate>
+    {% csrf_token %}
+  <div class="form-group">
+    <label for="title">标题<span>{{ form.title.errors.0 }}</span></label>
+    {{ form.title }}
+  </div>
+  <div class="form-group">
+    <label for="session">简介<span>{{ form.summary.errors.0 }}</span></label>
+      {{ form.summary }}
+  </div>
+  <div class="form-group">
+    <label for="comment">内容<span>{{ form.content.errors.0 }}</span></label>
+      {{ form.content }}
+  </div>
+    <div class="c2">
+    <label>类型 <span>{{ form.article_type_id.errors.0 }}</span></label>
+        {{ form.article_type_id }}
+    <label>分类 <span>{{ form.category_id.errors.0 }}</span></label>
+        {{ form.category_id }}
+    <label>标签 <span>{{ form.tags.errors.0 }}</span></label>
+        {{ form.tags }}
+        </div>
+  <button type="submit" class="btn btn-primary">提交</button>
+</form>
+    </div>
+{% endblock %}
+{% block js %}
+    <script>
+$(function () {
+ initKindEditor();
+});
+function initKindEditor() {
+    var kind = KindEditor.create(
+        '#comment', {
+            width: '100%' ,
+            height: '300px',
+           uploadJson:'/uploadimg',
+           extraFileUploadParams: {
+          'csrfmiddlewaretoken': '{{ csrf_token }}'
+             }})} </script>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'backdemo.html' %}
+{% block title %}
+    index
+{% endblock %}
+{% block css %}
+{% endblock %}
+{% block content %}
+  <h1>欢迎登陆：{{ request.session.userinfo }}</h1>
+{% endblock %}
+{% block js %}
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends 'head_demo.html' %}
+{% block content %}
+<div class="container theme-showcase" role="main">
+<div class="left" style="width: 60%">
+    {% for row in Articlelist %}
+    <div class="list-group">
+        <div href="#" class="list-group-item">
+            <h4 class="list-group-item-heading"><a>{{ row.title }}</a></h4>
+            <div class="list-group-item-text">
+                <p class="left"><img class="onepho " src="/static/img/ph1.jpg"/></p>{{ row.summary }}
+                <div style="clear: both"></div>
+                <p class="userinfo">
+                    <span class="fa fa-user-circle info" style="color: #4ca5ff">&nbsp;<a>{{row.blog.title }}</a></span>&nbsp;创建于&nbsp;{{ row.ctime }}&nbsp;&nbsp;&nbsp;
+                    <span class="fa fa-commenting-o info1"><a>99</a></span>
+                    <span class="fa fa-thumbs-o-up info1"><a>99</a></span>
+                </p>
+
+            </div>
+        </div>
+    </div>
+
+{% endfor %}
+ <div class="clearfix">
+
+     <ul class="pagination">
+         <li><a href="#">上一页</a></li>
+         <li class="active"><a  href="#">1</a></li>
+    <li><a href="#">下一页</a></li>
+     </ul>
+</div>
+ </div>
+
+<div class="right" style="width: 40%">
+{% include 'home_right.html' %}
+</div>
+</div>
+{% endblock %}

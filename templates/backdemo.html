@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %} {% endblock %}</title>
+    <link rel="stylesheet" href="/static/plugins/bootstrap/css/bootstrap.css"/>
+    <link rel="stylesheet" href="/static/plugins/font-awesome/css/font-awesome.min.css"/>
+{% block css %} {% endblock %}
+<style>
+    body{
+        margin: 0
+    }
+    a:hover{
+     text-decoration:none;
+        cursor: pointer;
+    }
+    .left{
+        float: left;
+    }
+    .right{
+        float:right;
+    }
+    .hide{
+        display: none;
+    }
+    .pg-header{
+        height: 48px;
+        min-width: 1100px;
+        background-color: #2F72AB;
+    }
+    .pg-header .logo{
+        height: 48px;
+        width: 200px;
+        background-color: #1c5a9c;
+        text-align: center;
+        line-height: 48px;
+        font-size: 33px;
+        font-weight: bold;
+        color:white;
+    }
+    .left-menu,.right-menu{
+        height: 48px;
+        line-height: 48px;
+        color: white;
+    }
+    .left-menu .menu-item, .right-menu .menu-item {
+        display: inline-block;
+        height: 48px;
+        width: 100px;
+        color: white;
+        padding: 0 8px;
+        cursor: pointer;
+        margin-left: 2px;
+        text-align: center;
+    }
+    .left-menu .menu-item:hover, .right-menu .menu-item:hover{
+        background-color:#1c5a9c ;
+    }
+     .sets{
+        display: inline-block;
+        position: relative;
+         background-color: #2F72AB;
+    }
+     .sets:hover{
+         background-color:#1c5a9c ;
+     }
+    .sets .sets-tags{
+        top: 48px;
+        display: none;
+        position: absolute;
+        background-color: #2F72AB;
+        z-index: 999}
+
+    .sets:hover .sets-tags{
+        display: block;
+    }
+    .sets img{
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        margin-left: 10px;
+    }
+    .personinfo{
+        margin-right: 40px;
+    }
+    .personinfo .sets-tags{
+        left: 0;
+        width: 102px;
+    }
+    .bg-success{
+        background-color: #15ff26; !important;
+        color: black; !important;
+    }
+    .bg-danger{
+        background-color:red; !important;
+        color: black; !important;
+    }
+    .bg-normal{
+        background-color:yellow; !important;
+        color: black; !important;
+    }
+    .menu{
+        position: absolute;
+        left: 0;
+        top: 48px;
+        bottom: 0;
+        width: 200px;
+        border: 1px solid #dddddd;
+    }
+    .menu  .menu-item{
+        display: block;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        border: solid 1px rgba(45,49,46,0.25);
+        font-size: 15px;
+        color: black;
+    }
+    .menu  .menu-item:hover{
+        border-left: solid 6px blue;
+
+    }
+    .menu .facolor{
+        color:#2F72AB;
+        margin-right: 10px;
+    }
+    .content{
+            position: absolute;
+            top: 49px;
+            bottom: 0;
+            right: 0;
+            left: 205px;
+            border: 1px solid #dddddd;
+            overflow: scroll;
+            min-width:895px;
+            z-index:9 ;
+    }
+</style>
+</head>
+<body>
+{% block modal %}
+{% endblock %}
+<div class="pg-header">
+    <div class="logo left">RFS</div>
+    <div class="left-menu left">
+        <a class="menu-item" href="/">博客首页</a>
+        <a class="menu-item">个人首页</a>
+        <div class="sets ">
+        <a class="menu-item">其他 <span class="caret"></span></a>
+            <div class="sets-tags">
+                <a class="menu-item ">博客首页</a>
+                <a class="menu-item ">博客首页</a>
+                <a class="menu-item ">博客首页</a>
+            </div>
+            </div>
+    </div>
+    <div class="right-menu right">
+        <a class="menu-item">任务
+        <i class="fa fa-bell-o" aria-hidden="true"></i>
+        <span class="badge bg-danger">4</span></a>
+        <a class="menu-item">通知
+        <i class="fa fa-envelope-o" aria-hidden="true"></i>
+        <span  class="badge bg-success">4</span></a>
+        <a class="menu-item">消息
+            <i class="fa fa-commenting-o" aria-hidden="true"></i>
+            <span  class="badge bg-normal">4</span>
+        </a>
+        <div class="sets personinfo">
+        <a class="menu-item" style="text-align: right">{{ request.session.userinfo }}
+        </a>
+            <img src="/static/img/ph1.jpg">
+            <div class="sets-tags">
+                <a class="menu-item" href="/{{ request.session.blogname }}.html">个人信息</a>
+                <a class="menu-item" href="/logout.html">注销</a>
+                <a class="menu-item">更多</a>
+            </div>
+            </div>
+    </div>
+</div>
+<div class="pg-body">
+    <div class="menu">
+        <a class="menu-item " href="/backend/pagelist" > <i class="fa fa-cogs facolor" aria-hidden="true"></i>博客首页</a>
+        <a class="menu-item "> <i class="fa fa-rss facolor" aria-hidden="true"></i>博客首页</a>
+        <a class="menu-item "> <i class="fa fa-paper-plane-o facolor" aria-hidden="true"></i>博客首页</a>
+        <a class="menu-item " href="/backend/article-0-0-0-0.html"> <i class="fa fa-bars facolor" aria-hidden="true"></i>文章管理</a>
+        <a class="menu-item "> <i class="fa fa-flag-o facolor" aria-hidden="true"></i>分类管理</a>
+        <a class="menu-item "> <i class="fa fa-tags facolor" aria-hidden="true"></i>标签管理</a>
+        <a class="menu-item "> <i class="fa fa-user facolor" aria-hidden="true"></i>个人信息</a>
+    </div>
+    <div class="content">
+        {% block content %} {% endblock %}
+    </div>
+</div>
+    <script type="text/javascript" src="/static/plugins/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/static/plugins/jquery-ui/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="/static/plugins/jquery-cookie/jquery.cookie.js"></script>
+    <script type="text/javascript" src="/static/plugins/kindeditor/kindeditor-all.js"></script>
+{% block js %} {% endblock %}
+</body>
+</html>

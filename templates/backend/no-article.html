@@ -1,0 +1,38 @@
+{% extends 'backdemo.html' %}
+{% block title %}
+    add-article
+{% endblock %}
+{% block css %}
+    <style>
+    .c1{
+        margin-left: 5px;
+    }
+    .addbtn{
+           display: inline-block;
+            height: 30px;
+            width: 150px;
+            background-color: #337ab7;
+            font-size:16px;
+            border-radius: 5px;
+            color: white;
+            text-align: center;
+            line-height:30px;
+        }
+    .addbtn:hover{
+        background-color: #0c41ff;
+        color: white;
+    }
+    </style>
+{% endblock %}
+{% block content %}
+    <ol class="breadcrumb">
+        <li><a href="#">文章管理</a></li>
+        <li class="active">文章编辑</li>
+    </ol>
+    <div class="c1">
+<h2>没有找到匹配项!</h2>
+    <a href="/backend/add-article.html" class="addbtn text-center" ><i class="fa fa-plus-circle" aria-hidden="true"></i>点击这里开始创建</a>
+    </div>
+{% endblock %}
+{% block js %}
+{% endblock %}

@@ -1,0 +1,141 @@
+{% extends 'backdemo.html' %}
+{% load filter %}
+{% block title %}
+    article
+{% endblock %}
+{% block css %}
+    <style>
+        .cotent-searh {
+            margin: 10px 50px;
+        }
+        .cotent-searh .item{
+            margin: 0 10px;
+        }
+        .breadcrumb{
+                margin-bottom: 0; !important;
+        }
+        .breadcrumb ul,ol{
+                margin-bottom: 0; !important;
+        }
+        .cotent-head1 {
+            height: 40px;
+            padding: 8px 15px;
+            border: dotted 1px rgba(45, 49, 46, 0.42);
+            border-left: solid 4px blue;
+        }
+        .cotent-head2 {
+            height: 40px;
+            background-color: #f1f0f0;
+            border: solid 1px rgba(47,45,49,0.33);
+            line-height: 40px;
+            padding: 0 20px;
+        }
+        .cotent-head2 .addbtn{
+           display: inline-block;
+            height: 38px;
+            width: 110px;
+            background-color: #337ab7;
+            border-radius: 5px;
+            color: white;
+            text-align: center;
+        }
+    .cotent-head2 .addbtn:hover{
+        background-color: #0c41ff;
+    }
+    .content-article-contrl{
+        margin-left: 10px;
+    }
+    .query{
+        z-index: 9999 !important;
+    }
+    </style>
+{% endblock %}
+{% block modal %}
+     <div class="modal fade"  id="myModal" tabindex="10" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content query">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+        <h3 class="text-center" style="color: red">确认删除此项？</h3>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <a type="button" id="delquerybtn" href="#" class="btn btn-primary">确定</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block content %}
+    <ol class="breadcrumb">
+        <li><a href="#">文章管理</a></li>
+        <li class="active">文章列表</li>
+    </ol>
+    <div class="cotent-head1"><i class="fa fa-search" aria-hidden="true"></i>搜索条件</div>
+    <div class="cotent-searh" >
+        <ul class="nav nav-pills">
+        {% filter_all argdict "article_type_id" %}
+        {% filterother argdict 'article_type_id' type_choice_list %}
+        </ul>
+    </div>
+    <div class="cotent-searh" >
+        <ul class="nav nav-pills">
+        {% filter_all argdict "category_id" %}
+        {% filterother argdict 'category_id' blogobj.category.all %}
+        </ul>
+    </div>
+    <div class="cotent-searh" >
+        <ul class="nav nav-pills">
+        {% filter_all argdict "tags__nid" %}
+        {% filterother argdict 'tags__nid' blogobj.tag.all %}
+        </ul>
+    </div>
+    <div class="cotent-head2"><i class="fa fa-table" aria-hidden="true"></i>
+     搜索文章({{ Articlelist.count }}篇)
+        <a target="_blank" href="/backend/add-article.html" class="addbtn right">
+                <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                创建新文章
+            </a>
+    </div>
+    <div style="min-height:200px">
+    <table class="table table-hover table-striped table-bordered">
+        <thread>
+            <tr>
+                <td style="width: 60%">文章标题
+                    {% if argdict.typeseqid == 0 %}
+                    <a class="fa fa-unsorted" href="/backend/article-{{ argdict.article_type_id }}-{{ argdict.category_id }}-{{  argdict.tags__nid}}-1.html" ></a>
+                    {% else %}
+                    <a class="fa fa-unsorted" href="/backend/article-{{ argdict.article_type_id }}-{{ argdict.category_id }}-{{  argdict.tags__nid}}-0.html" ></a>
+                   {% endif %}
+                </td >
+                <td style="width: 38%">操作</td>
+            </tr>
+        </thread>
+        <tbody>
+        {% for row in Articlelist %}
+        <tr>
+        <td><a href="/{{ blogobj.site }}/{{ row.nid }}.html">{{ row.title }}</a></td>
+        <td><a href1="/backend/del-article-{{ row.nid }}.html" class="btn btn-danger btn-xs btndelclass"><i class="fa fa-close" aria-hidden="true"></i>删除</a>
+            <a href="/backend/edit-article-{{ row.nid }}.html" class="btn btn-primary btn-xs content-article-contrl"><i class="fa fa-edit" aria-hidden="true"></i>编辑</a></td>
+        </tr>
+    {% endfor %}
+        </tbody>
+    </table>
+    </div>
+    <nav aria-label="Page navigation" class="text-center">
+          <ul class="pagination">
+              {{ pake_str}}
+  </ul>
+</nav>
+{% endblock %}
+{% block js %}
+    <script>
+    $('.btndelclass').click(function () {
+        var urlstr= $(this).attr('href1');
+        $('#myModal').modal('show');
+        $('#delquerybtn').attr('href',urlstr)
+    })
+    </script>
+{% endblock %}

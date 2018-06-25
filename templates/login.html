@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>login</title>
+    <link rel="stylesheet" href="/static/plugins/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/static/plugins/font-awesome/css/font-awesome.min.css"/>
+    <script type="text/javascript" src="/static/plugins/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/static/plugins/jquery-cookie/jquery.cookie.js"></script>
+    <style>
+        body {
+            padding-top: 40px;
+            padding-bottom: 40px;
+            background-color: #eee;
+        }
+
+        .form-signin {
+            max-width: 430px;
+            width: 400px;
+            margin-top: 50px;
+            margin-left: auto;
+            margin-right: auto;
+            border: 1px solid #f0f0f0;
+            padding: 10px 30px 50px 30px;
+            -webkit-box-shadow: 5px 10px 10px rgba(0, 0, 0, .05);
+            box-shadow: 5px 10px 10px rgba(0, 0, 0, .05);
+        }
+
+        .form-signin .form-signin-heading {
+            font-family: 楷体;
+            font-weight: bolder;
+        }
+
+        .form-signin .checkbox {
+            margin-bottom: 10px;
+        }
+
+        .form-signin .checkbox {
+            font-weight: normal;
+        }
+
+        .form-signin .form-control {
+            position: relative;
+            height: auto;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        .form-signin .form-control:focus {
+            z-index: 2;
+        }
+
+        .form-signin input[type="email"] {
+            margin-bottom: -1px;
+            border-bottom-right-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+
+        .form-signin input[type="password"] {
+            margin-bottom: 10px;
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+        }
+
+        .form-signin .code {
+            padding-left: 0;
+        }
+
+        .form-signin .other {
+            margin-top: 10px;
+        }
+
+        .onepho {
+            height: 43px;
+            width: 134px;
+        }
+    </style>
+</head>
+<body style="background-color: white">
+<div class="container form-signin">
+    <form action="/login.html" method="POST">
+        {% csrf_token %}
+        <h2 class="form-signin-heading text-center">用户登录</h2>
+        <div class="form-group">
+            <label for="inputuser">用户名（<a href="#">找回</a>）</label>
+            <input type="text" id="inputuser" class="form-control" placeholder="User" name="username" required autofocus>
+            <span style="color: red">{{ check_obj.errors.username.0 }}</span>
+        </div>
+        <div class="form-group">
+            <label for="inputPassword">密码(<a href="#">重置</a>)</label>
+            <input type="password" id="inputPassword" class="form-control" name="password" placeholder="Password" required>
+            <span style="color: red">{{ check_obj.errors.password.0 }}</span>
+        </div>
+        <div class="form-group">
+            <div>
+                <label for="inputcode">验证码</label>
+            </div>
+            <div class="col-sm-6 code">
+                <input type="password" id="inputcode" class="form-control" placeholder="请输入验证码" name="check_code" required>
+                <span style="color: red">{{ check_obj.errors.check_code.0 }}</span>
+            </div>
+            <div class="col-sm-6 ">
+                <img class="onepho" src="/checkcodeimg">
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <div class="form-group">
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" name='rmb'  value="remember-me"> Remember me
+                </label>
+            </div>
+        </div>
+        <span style="color: red">{{ check_res }}</span>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        <div class="other"><a href="/register.html">>>立即注册</a></div>
+        <div><a href="#">>>反馈问题</a></div>
+    </form>
+    <script>
+        document.getElementsByClassName('onepho')[0].onclick=function () {
+            this.src = this.src + "?";
+        }
+    </script>
+</div>
+
+</body>
+</html>

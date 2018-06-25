@@ -1,0 +1,41 @@
+{% extends 'homesite_demo.html' %}
+{% block style %}
+    <style>
+        p span {
+            margin: 0 5px;
+        }
+
+        .margin-top10 {
+            margin-top: 20px;
+        }
+    </style>
+{% endblock %}
+{% block content %}
+        <div class="col-md-7">
+            <div class="list-group">
+                {% for row in article_list %}
+                    <div class="list-group-item margin-top10">
+                        <h4 class="list-group-item-heading"><a href="/{{ blogobj.site }}/{{ row.nid }}.html">{{ row.title }}</a></h4>
+                        <div class="list-group-item-text">
+                            <p> {{ row.summary }}</p>
+                            <p> {{ row.ctime }}<span>阅读({{ row.read_count }})</span><span><a>评论(0)</a></span><span><a>编辑</a></span></p>
+                        </div>
+
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+{% endblock %}
+{% block script %}
+<script>
+$(function () {
+    var mode=$('#head').attr('mode');
+    var modeid = $('#head').attr('modeid');
+    var modeidstr = "#"+mode+modeid;
+    $(modeidstr).addClass('active')
+})
+</script>
+
+
+
+{% endblock %}
