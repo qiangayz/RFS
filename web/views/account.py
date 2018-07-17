@@ -37,6 +37,8 @@ def login(request):
                 return render(request, 'login.html', {'check_res': '验证码错误'})
             if userinfo:
                 request.session['userinfo'] = userinfo.first().nickname
+                request.session['userinfo1'] = userinfo.first().nid
+
                 try:
                     request.session['blogname'] = userinfo.first().blog.site
                 except Exception:

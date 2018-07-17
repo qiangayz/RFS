@@ -149,3 +149,30 @@ class UpDown(models.Model):
             ('acticle','user'),
         ]
         verbose_name_plural = '踩赞表'
+
+class Trouble(models.Model):
+    title = models.CharField(max_length=32,verbose_name='标题')
+    detail= models.TextField(verbose_name='内容')
+    user = models.ForeignKey(verbose_name='提交人',to=UserInfo,on_delete=models.CASCADE,related_name='u')
+    # ctime = models.CharField(max_length=32)
+    ctime = models.DateTimeField(verbose_name='创建时间')
+    status_choices = (
+        (1,'未处理'),
+        (2,'处理中'),
+        (3,'已处理')
+    )
+    status = models.IntegerField(choices=status_choices,default=1)
+    processer = models.ForeignKey(verbose_name='处理者',to=UserInfo,on_delete=models.CASCADE,related_name='p',null=True,blank=True)
+    solution = models.TextField(null=True)
+    ptime = models.DateTimeField(null=True)
+    pj_choices = (
+        (1, '不满意'),
+        (2, '一般'),
+        (3, '很好')
+    )
+    pj = models.IntegerField(choices=pj_choices, default=1,null=True)
+
+class Trouble_kill_demo(models.Model):
+    title= models.CharField(max_length=32,verbose_name='标题')
+    detail = models.TextField(verbose_name='内容')
+

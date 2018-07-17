@@ -20,5 +20,4 @@ urlpatterns = [
     url(r'^(?P<site>\w+).html$',home.homesite),
     url(r'^(?P<site>\w+)/(?P<nid>\d+).html$',home.detail),
     url(r'^uploadimg',home.uploadimg),
-
 ]

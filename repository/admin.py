@@ -80,3 +80,14 @@ class CommentAdmin(admin.ModelAdmin):
 class UpDownAdmin(admin.ModelAdmin):
     list_display = ['acticle','user','up']
 
+
+@admin.register(Trouble_kill_demo)
+class Trouble_kill_demoAdmin(admin.ModelAdmin):
+    list_display = ['title','detail',]
+
+@admin.register(Trouble)
+class TroubleAdmin(admin.ModelAdmin):
+
+    list_display = ['title','user','ctime','status','processer']
+    # list_editable 设置默认可编辑字段
+    list_editable = ['processer', 'ctime','status']

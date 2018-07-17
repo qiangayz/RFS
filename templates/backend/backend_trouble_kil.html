@@ -1,0 +1,71 @@
+{% extends 'backdemo.html' %}
+{% block title %}
+    add-article
+{% endblock %}
+{% block css %}
+    <style>
+    .c1{
+        margin-left: 5px;
+    }
+    .c2{
+        font-size: 15px;
+    }
+    .summary{
+    height: 100px !important;}
+    form span{
+        color: red;
+    }
+    .demo{
+        color:black !important;
+    }
+    </style>
+{% endblock %}
+{% block content %}
+    <ol class="breadcrumb">
+        <li><a href="#">故障管理</a></li>
+        <li class="active">解决故障</li>
+    </ol>
+    <div class="c1">
+<form method="POST" action="/backend/trouble-kill-{{ obj.id }}.html" novalidate>
+    {% csrf_token %}
+  <div class="form-group">
+    <label for="title">标题</label>
+    <h3>{{ obj.title }}</h3>
+      </div>
+  <div class="form-group">
+    <label for="comment" >模板<span><select class="demo">
+        {% for row in demo %}
+            <option value="{{ row.detail}}" > {{  row.title }}</option>
+        {% endfor %}
+    </select></span></label>
+  </div>
+
+  <div class="form-group">
+    <label for="comment">解决方案<span>{{ form.content.errors.0 }}</span></label>
+      {{ form.solution }}
+  </div>
+  <button type="submit" class="btn btn-primary">保存</button>
+</form>
+    </div>
+{% endblock %}
+{% block js %}
+    <script>
+$(function () {
+ initKindEditor();
+});
+var kind = null;
+function initKindEditor() {
+    kind = KindEditor.create(
+        '#solution', {
+            width: '100%' ,
+            height: '300px',
+           uploadJson:'/uploadimg',
+           extraFileUploadParams: {
+          'csrfmiddlewaretoken': '{{ csrf_token }}'
+             }})}
+    $('.demo').change(function () {
+        var str = $(this).val();
+        kind.html(str)
+    })
+    </script>
+{% endblock %}

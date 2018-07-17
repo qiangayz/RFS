@@ -21,5 +21,6 @@ from django.conf.urls import url
 urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^backend/',include( 'backend.urls')),
-    path(r'', include('web.urls'))
+    path(r'', include('web.urls')),
+    url(r'^rbac/', include('rbac.urls'))
 ]

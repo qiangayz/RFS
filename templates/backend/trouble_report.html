@@ -1,0 +1,162 @@
+{% extends 'backdemo.html' %}
+{% block title %}
+    article
+{% endblock %}
+{% block css %}
+    <style>
+    </style>
+{% endblock %}
+{% block modal %}
+{% endblock %}
+{% block content %}
+    <ol class="breadcrumb">
+        <li><a href="#">保障管理</a></li>
+        <li class="active">数据分析</li>
+    </ol>
+</head>
+<body>
+
+<div id="container"></div>
+<div class="cotent-head2"><i class="fa fa-table" aria-hidden="true"></i>
+     搜索故障({{ result.count }}篇)
+        <a target="_blank" href="/backend/trouble-create.html" class="addbtn right">
+                <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                创建故障单
+            </a>
+    </div>
+    <div style="min-height:200px">
+    <table class="table table-hover table-striped table-bordered">
+        <thread>
+            <tr>
+                <td >故障标题
+                    {% if argdict.typeid == '0' %}
+                    <a class="fa fa-unsorted" href="/backend/trouble-list.html" ></a>
+                    {% else %}
+                    <a class="fa fa-unsorted" href="/backend/trouble-list.html0" ></a>
+                   {% endif %}
+                </td >
+                <td >故障状态</td>
+                <td >故障创建时间</td>
+                <td >故障处理人</td>
+                <td >操作</td>
+            </tr>
+        </thread>
+        <tbody>
+        {% for row in result %}
+        <tr>
+        <td><a href="/{{ blogobj.site }}/{{ row.nid }}.html">{{ row.title }}</a></td>
+        <td>{{ row.get_status_display }}</td>
+        <td>{{ row.ctime }}</td>
+        <td>{{ row.processer }}</td>
+        <td><a href1="/backend/del-article-{{ row.nid }}.html" class="btn btn-danger btn-xs btndelclass"><i class="fa fa-close" aria-hidden="true"></i>删除</a>
+            <a href="/backend/trouble-edit-{{ row.id }}.html" class="btn btn-primary btn-xs content-article-contrl"><i class="fa fa-edit" aria-hidden="true"></i>编辑</a></td>
+        </tr>
+    {% endfor %}
+        </tbody>
+    </table>
+    </div>
+    <nav aria-label="Page navigation" class="text-center">
+          <ul class="pagination">
+              {{ pake_str}}
+  </ul>
+</nav>
+{% endblock %}
+{% block js %}
+<script src="/static/plugins/Highcharts/code/highcharts.js"></script>
+    <script>
+    Highcharts.setOptions({
+        global: {
+            useUTC: false
+        }
+    });
+
+
+    $(function(){
+
+        initChart();
+
+    });
+
+    function initChart(){
+        var config = {
+            chart: {
+                type: 'spline'
+            },
+            title: {
+                text: '动态模拟实时数据'
+            },
+            xAxis: {
+                type: 'datetime'
+            },
+            yAxis: {
+                title: {
+                    text: '值'
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }]
+            },
+            tooltip: {
+                formatter: function () {
+                    return '<b>' + this.series.name + '</b><br/>' +
+                            Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
+                            Highcharts.numberFormat(this.y, 2);
+                }
+            },
+            legend: {
+                enabled: true
+            },
+            exporting: {
+                enabled: false
+            },
+            series: [
+                {
+                    name: 'A',
+                    data: [
+                        [1491535949788.035, 7.0],
+                        [1491535949888.035, 6.0],
+                        [1491535949988.035, 10.0],
+                        [1491535950088.035, 1.0],
+                    ]
+                },
+                {
+                    name: 'B',
+                    data: [
+                        [1491535949788.035, 8.0],
+                        [1491535949888.035, 2.0],
+                        [1491535949988.035, 40.0],
+                        [1491535950088.035, 1.0],
+                    ]
+                }
+                ,
+                {
+                    name: 'C',
+                    data: [
+                        [1491535949788.035, 10.0],
+                        [1491535949888.035, 2.0],
+                        [1491535949988.035, 10.0],
+                        [1491535950088.035, 8.0],
+                    ]
+                }
+
+            ]
+        };
+        // 数据库中获取 series
+{#        $('#container').highcharts(config);#}
+
+        $.ajax({
+            url: '/backend/trouble-json-report.html',
+            dataType: 'json',
+            success:function(arg){
+                config['series'] = arg;
+                $('#container').highcharts(config);
+                $('.highcharts-credits').text('')
+            }
+        })
+
+    }
+
+</script>
+{% endblock %}
