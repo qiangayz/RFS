@@ -11,3 +11,4 @@ type_choice = [
 type_choice_list = map(lambda item:{'nid':item[0],'title':item[1]},type_choice)
 for row in type_choice_list:
     print(row)
+print(pow(2,2))
